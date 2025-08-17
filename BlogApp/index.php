@@ -1,5 +1,5 @@
-<?php 
-include 'includes/header.php'; 
+<?php
+include 'includes/header.php';
 include 'includes/db.php'; // Database connection
 ?>
 
@@ -24,17 +24,20 @@ include 'includes/db.php'; // Database connection
 
             $result = $conn->query($sql);
 
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
-                    $excerpt = substr($row['content'], 0, 100) . "..."; // short preview
-                    echo '
+            if ($result) {
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $excerpt = substr($row['content'], 0, 100) . "..."; // short preview
+                        echo '
                     <div class="blog-card">
-                        <h3>'.htmlspecialchars($row['title']).'</h3>
-                        <p>'.htmlspecialchars($excerpt).'</p>
-                        <p class="meta">By '.htmlspecialchars($row['username']).' | '.date("d M Y", strtotime($row['created_at'])).'</p>
-                        <a href="post.php?id='.$row['id'].'" class="read-more">Read More</a>
+                        <h3>' . htmlspecialchars($row['title']) . '</h3>
+                        <p>' . htmlspecialchars($excerpt) . '</p>
+                        <p class="meta">By ' . htmlspecialchars($row['username']) . ' | ' . date("d M Y", strtotime($row['created_at'])) . '</p>
+                        <a href="post.php?id=' . $row['id'] . '" class="read-more">Read More</a>
                     </div>
                     ';
+                    }
                 }
             } else {
                 echo '<p>No blogs found.</p>';
